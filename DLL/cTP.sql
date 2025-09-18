@@ -11,7 +11,7 @@ CREATE TABLE Usuario (
     usuario_id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    contraseña TEXT NOT NULL,
+    contrasena TEXT NOT NULL,
     rol VARCHAR(50) NOT NULL,
     fecha_registro TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     perfil_completo BOOLEAN DEFAULT FALSE,
@@ -22,10 +22,10 @@ CREATE TABLE Usuario (
 -- Almacena los datos de los libros.
 CREATE TABLE Libro (
     libro_id SERIAL PRIMARY KEY,
-    título VARCHAR(255) NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
     autor VARCHAR(255) NOT NULL,
     género VARCHAR(100),
-    descripción TEXT,
+    descripcion TEXT,
     portada_url TEXT,
     nivel_educativo VARCHAR(50)
 );
@@ -35,9 +35,9 @@ CREATE TABLE Libro (
 CREATE TABLE Lista (
     lista_id SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
-    descripción TEXT,
+    descripcion TEXT,
     tipo VARCHAR(50),
-    fecha_creación TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabla: Medalla
@@ -45,7 +45,7 @@ CREATE TABLE Lista (
 CREATE TABLE Medalla (
     medalla_id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) UNIQUE NOT NULL,
-    descripción TEXT,
+    descripcion TEXT,
     tipo_accion VARCHAR(50),
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -55,7 +55,7 @@ CREATE TABLE Medalla (
 CREATE TABLE ClubLectura (
     club_id SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
-    descripción TEXT,
+    descripcion TEXT,
     fecha_inicio DATE,
     fecha_fin DATE,
     orador VARCHAR(255)

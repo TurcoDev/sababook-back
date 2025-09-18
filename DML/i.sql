@@ -2,35 +2,35 @@
 INSERT INTO Rol (nombre_rol) VALUES ('alumno'), ('docente'), ('administrador');
 
 -- Insertar usuarios con diferentes roles
-INSERT INTO Usuario (nombre, email, contraseña, rol, perfil_completo) VALUES
+INSERT INTO Usuario (nombre, email, contrasena, rol, perfil_completo) VALUES
 ('Ana García', 'ana.garcia@email.com', 'hashed_pass_123', 'docente', TRUE),
 ('Juan Pérez', 'juan.perez@email.com', 'hashed_pass_456', 'alumno', FALSE),
 ('Laura Martínez', 'laura.martinez@email.com', 'hashed_pass_789', 'administrador', TRUE);
 
 -- Insertar libros
-INSERT INTO Libro (título, autor, género, nivel_educativo) VALUES
+INSERT INTO Libro (titulo, autor, género, nivel_educativo) VALUES
 ('Cien años de soledad', 'Gabriel García Márquez', 'Realismo mágico', 'Secundario'),
 ('El principito', 'Antoine de Saint-Exupéry', 'Fábula', 'Primario'),
 ('1984', 'George Orwell', 'Distopía', 'Secundario');
 
 -- Insertar opiniones
-INSERT INTO Opinión (usuario_id, libro_id, calificacion, comentario) VALUES
+INSERT INTO Opinion (usuario_id, libro_id, calificacion, comentario) VALUES
 (1, 2, 5, 'Un libro esencial para todas las edades.'),
 (2, 3, 4, 'Me hizo pensar mucho en la sociedad actual.'),
 (1, 1, 5, 'Una lectura obligatoria de la literatura universal.');
 
 -- Más usuarios
-INSERT INTO Usuario (nombre, email, contraseña, rol, perfil_completo, avatar_url) VALUES
+INSERT INTO Usuario (nombre, email, contrasena, rol, perfil_completo, avatar_url) VALUES
 ('Pedro Gómez', 'pedro.gomez@email.com', 'hashed_pass_001', 'alumno', TRUE, 'https://ejemplo.com/avatars/pedro.jpg'),
 ('Sofía Torres', 'sofia.torres@email.com', 'hashed_pass_002', 'docente', TRUE, 'https://ejemplo.com/avatars/sofia.jpg');
 
 -- Más libros
-INSERT INTO Libro (título, autor, género, descripción, portada_url, nivel_educativo) VALUES
+INSERT INTO Libro (titulo, autor, género, descripcion, portada_url, nivel_educativo) VALUES
 ('Don Quijote de la Mancha', 'Miguel de Cervantes', 'Novela', 'Una de las obras más destacadas de la literatura española.', 'https://ejemplo.com/portadas/quijote.jpg', 'Universitario'),
 ('Fahrenheit 451', 'Ray Bradbury', 'Ciencia ficción', 'Una sociedad donde los libros están prohibidos.', 'https://ejemplo.com/portadas/fahrenheit.jpg', 'Secundario');
 
 -- Más opiniones
-INSERT INTO Opinión (usuario_id, libro_id, calificacion, comentario) VALUES
+INSERT INTO Opinion (usuario_id, libro_id, calificacion, comentario) VALUES
 (2, 4, 3, 'Demasiado largo y complejo para mí.'),
 (3, 5, 5, 'Un clásico que te hace reflexionar sobre la libertad de expresión.'),
 (4, 5, 4, 'Me encantó la trama, pero me hubiera gustado un final diferente.');
@@ -38,21 +38,21 @@ INSERT INTO Opinión (usuario_id, libro_id, calificacion, comentario) VALUES
 --Medallas, foros y clubes de lectura
 -- Insertar datos en la tabla Medalla
 -- Estos son los tipos de medallas que un usuario puede obtener.
-INSERT INTO Medalla (nombre, descripción, tipo_accion) VALUES
+INSERT INTO Medalla (nombre, descripcion, tipo_accion) VALUES
 ('Lector Compulsivo', 'Por leer 10 libros en un año.', 'lectura'),
-('Crítico Literario', 'Por escribir 50 opiniones sobre libros.', 'opinión'),
+('Crítico Literario', 'Por escribir 50 opiniones sobre libros.', 'Opinion'),
 ('Pionero del Foro', 'Por crear el primer foro de debate.', 'foro'),
 ('Miembro de Club', 'Por unirse a un club de lectura.', 'club');
 
 -- Insertar datos en la tabla Foro
 -- Se crean algunos foros con un usuario como creador.
-INSERT INTO Foro (título, descripción, creador_id) VALUES
+INSERT INTO Foro (titulo, descripcion, creador_id) VALUES
 ('Debate sobre "1984"', 'Análisis en profundidad de los temas de la novela de Orwell.', 1),
 ('Recomendaciones de fantasía', 'Comparte tus libros de fantasía favoritos.', 2);
 
 -- Insertar datos en la tabla ClubLectura
 -- Se establecen clubes de lectura con sus fechas y oradores.
-INSERT INTO ClubLectura (nombre, descripción, fecha_inicio, fecha_fin, orador) VALUES
+INSERT INTO ClubLectura (nombre, descripcion, fecha_inicio, fecha_fin, orador) VALUES
 ('Club de Ciencia Ficción', 'Nos reunimos una vez al mes para debatir un clásico del género.', '2025-10-01', '2026-03-01', 'Prof. Eva Lópe'),
 ('Aventuras Literarias', 'Para los amantes de las novelas de aventura y viaje.', '2025-11-15', NULL, 'Dr. Marco Polo');
 

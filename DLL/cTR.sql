@@ -5,7 +5,7 @@ CREATE TABLE RecursoEducativo (
     libro_id INTEGER REFERENCES Libro(libro_id) ON DELETE CASCADE,
     tipo VARCHAR(50) NOT NULL,
     url TEXT NOT NULL,
-    descripción TEXT
+    descripcion TEXT
 );
 
 -- Tabla: ListaLectura
@@ -13,15 +13,15 @@ CREATE TABLE RecursoEducativo (
 CREATE TABLE ListaLectura (
     lista_id INTEGER REFERENCES Lista(lista_id),
     docente_id INTEGER REFERENCES Usuario(usuario_id),
-    descripción TEXT,
+    descripcion TEXT,
     nivel VARCHAR(50),
-    fecha_creación TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (lista_id, docente_id)
 );
 
--- Tabla: Opinión
+-- Tabla: Opinion
 -- Opiniones y calificaciones de los libros.
-CREATE TABLE Opinión (
+CREATE TABLE Opinion (
     opinion_id SERIAL PRIMARY KEY,
     usuario_id INTEGER REFERENCES Usuario(usuario_id),
     libro_id INTEGER REFERENCES Libro(libro_id),
@@ -34,8 +34,8 @@ CREATE TABLE Opinión (
 -- Foros de discusión creados por usuarios.
 CREATE TABLE Foro (
     foro_id SERIAL PRIMARY KEY,
-    título VARCHAR(255) NOT NULL,
-    descripción TEXT,
+    titulo VARCHAR(255) NOT NULL,
+    descripcion TEXT,
     creador_id INTEGER REFERENCES Usuario(usuario_id),
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

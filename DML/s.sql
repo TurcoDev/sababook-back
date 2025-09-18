@@ -4,33 +4,33 @@ SELECT * FROM Libro;
 -- Seleccionar el nombre y email de todos los usuarios con rol de 'docente'
 SELECT nombre, email FROM Usuario WHERE rol = 'docente';
 
--- Obtener el título del libro y el comentario de la opinión para un libro específico
-SELECT L.título, O.comentario, O.calificacion
-FROM Opinión AS O
+-- Obtener el titulo del libro y el comentario de la Opinion para un libro específico
+SELECT L.titulo, O.comentario, O.calificacion
+FROM Opinion AS O
 JOIN Libro AS L ON O.libro_id = L.libro_id
-WHERE L.título = 'El gran Gatsby';
+WHERE L.titulo = 'El gran Gatsby';
  
 --Listar todos los libros con sus autores y nivel educativo
 SELECT
     libro_id,
-    título,
+    titulo,
     autor,
     género,
     nivel_educativo
 FROM
     Libro
 ORDER BY
-    título;
+    titulo;
 
 --Buscar libro por titulo o autor
 SELECT
     libro_id,
-    título,
+    titulo,
     autor
 FROM
     Libro
 WHERE
-    título ILIKE '%El gran Gatsby%'
+    titulo ILIKE '%El gran Gatsby%'
     OR autor ILIKE '%F. Scott Fitzgerald%';
 
 --Obtener la lista de usuarios con su rol
@@ -56,14 +56,14 @@ GROUP BY
 
 --Listar los 10 libros mejor calificados
 SELECT
-    L.título,
+    L.titulo,
     AVG(O.calificacion) AS calificacion_promedio
 FROM
     Libro AS L
 JOIN
-    Opinión AS O ON L.libro_id = O.libro_id
+    Opinion AS O ON L.libro_id = O.libro_id
 GROUP BY
-    L.libro_id, L.título
+    L.libro_id, L.titulo
 ORDER BY
     calificacion_promedio DESC
 LIMIT 10;
@@ -72,7 +72,7 @@ LIMIT 10;
 SELECT
     AVG(calificacion) AS calificacion_promedio
 FROM
-    Opinión
+    Opinion
 WHERE
     libro_id = libro_id;
 
@@ -83,7 +83,7 @@ SELECT
     O.comentario,
     O.fecha
 FROM
-    Opinión AS O
+    Opinion AS O
 JOIN
     Usuario AS U ON O.usuario_id = U.usuario_id
 WHERE
@@ -121,7 +121,7 @@ WHERE
 --Ver todas las medallas obtenidas por un usuario
 SELECT
     M.nombre,
-    M.descripción,
+    M.descripcion,
     UM.fecha_obtenida
 FROM
     UsuarioMedalla AS UM
@@ -144,7 +144,7 @@ WHERE
 SELECT
     AVG(calificacion) AS calificacion_promedio
 FROM
-    Opinión
+    Opinion
 WHERE
     libro_id = 1;
 
@@ -155,7 +155,7 @@ SELECT
     O.comentario,
     O.fecha
 FROM
-    Opinión AS O
+    Opinion AS O
 JOIN
     Usuario AS U ON O.usuario_id = U.usuario_id
 WHERE
@@ -166,15 +166,15 @@ ORDER BY
 
 -- Obtener todos los libros con calificación promedio
 SELECT
-    L.título,
+    L.titulo,
     L.autor,
     AVG(O.calificacion) AS calificacion_promedio
 FROM
     Libro AS L
 JOIN
-    Opinión AS O ON L.libro_id = O.libro_id
+    Opinion AS O ON L.libro_id = O.libro_id
 GROUP BY
-    L.libro_id, L.título, L.autor;
+    L.libro_id, L.titulo, L.autor;
 
 -- Obtener todos los usuarios que no han completado su perfil
 SELECT nombre, email
