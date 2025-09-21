@@ -31,7 +31,7 @@ CREATE TABLE Libro (
 );
 
 -- Tabla: Lista
--- Define listas temáticas o de lectura.
+-- Almacena los datos de los libros.
 CREATE TABLE Lista (
     lista_id SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
