@@ -14,7 +14,7 @@ CREATE TABLE usuario (
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     contrasena TEXT NOT NULL,
-    rol VARCHAR(50) NOT NULL,  -- Alternativamente: rol_id INTEGER REFERENCES rol(rol_id)
+    rol_id INTEGER REFERENCES rol(rol_id),
     fecha_registro TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     perfil_completo BOOLEAN DEFAULT FALSE,
     avatar_url TEXT,
