@@ -1,4 +1,5 @@
-import { db } from "../db.js";
+
+import { db,pgp } from "../db.js";
 
 class UserModel {
      async getAllUsers() {
@@ -78,45 +79,33 @@ class UserModel {
             avatar_url, 
             nivel_educativo 
         } = userData;
-        
-        try {
-            
-            const updatedUser = await db.oneOrNone(`
-                UPDATE usuario
-                SET 
-                    nombre = $2,
-                    email = $3,
-                    contrasena = $4,
-                    rol_id = $5,
-                    perfil_completo = $6,
-                    avatar_url = $7,
-                    nivel_educativo = $8
-                WHERE 
-                    usuario_id = $1
-                RETURNING 
-                    usuario_id, nombre, email, rol_id, perfil_completo, fecha_registro;
-            `, [
-                userId,
-                nombre,
-                email,
-                contrasena,
-                rol_id,
-                perfil_completo,
-                avatar_url,
-                nivel_educativo 
-            ]);
+        try{
 
-            if (!updatedUser) {
-                
-                throw new Error(`ID ${userId} not found.`);
+            if (Object.keys(userData).length === 0) {
+             throw new Error("No data provided for update.");
             }
-            
-            return updatedUser; 
+            const setClause = pgp.helpers.sets(userData, null, 'usuario');
+            const sqlQuery = `
+            UPDATE 
+                usuario
+            SET 
+                ${setClause}
+            WHERE 
+                usuario_id = $1
+            RETURNING 
+                usuario_id, nombre, email, rol_id, perfil_completo, fecha_registro, avatar_url, nivel_educativo;
+        `;
+        const updatedUser = await db.oneOrNone(sqlQuery, [userId]);
 
-        } catch (error) {
-            console.error("Error updateUser:", error.message);
-            
+        if(!updatedUser) {
+            throw new Error(`User ID ${userId} not found.`);
         }
+        return updatedUser 
+        }catch (error) {
+            console.error("Error in UserModel.updateUser:", error.message);
+            throw error;
+        }
+     
     }
     async getUserById(userId) {
         const sqlQuery = `
