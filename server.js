@@ -5,8 +5,6 @@ import userRoutes from "./src/routes/user.routes.js";
 const app = express();
 
 // Permitir todos los orígenes (solo para desarrollo)
-app.use(cors());
-
 // O configurar CORS específicamente
 app.use(cors({
   origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'null'], // null para archivos locales
