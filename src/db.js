@@ -1,29 +1,27 @@
 import 'dotenv/config'; 
-import pgp from 'pg-promise';
+import pgPromise from 'pg-promise';
 
+const connectionString = process.env.DATABASE_URL;
 
-const connectionOptions = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: parseInt(process.env.DB_PORT, 10)
+if (!connectionString) {
+  console.error("DATABASE_URL environment variable is not set.");
+  process.exit(1);
 }
 
-const dbInit = pgp({});
-const db = dbInit(connectionOptions);
 
-async function testConnection() {
+const pgp =pgPromise();
+const db = pgp(connectionString);
+
+const testConnection = async () => {
   try {
-    await db.one('SELECT current_timestamp');
-    console.log('Database connection successful');
+    // Usamos una consulta simple para verificar la conexión
+    await db.one('SELECT current_timestamp'); 
+    console.log('✅ Database connection established (Remota)');
+    return db;
   } catch (error) {
-    console.error('Database connection failed:', error);
-    console.error(`Message: ${error.message}`);
-    process.exit(1);
+    console.error('❌ Supabase database connection failed:', error.message);
+    throw error; 
   }
-}
+};
 
-export { db, testConnection };
-
-testConnection();
+export { db, pgp ,testConnection};
