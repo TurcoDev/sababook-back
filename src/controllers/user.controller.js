@@ -31,18 +31,22 @@ class UserController {
         try {
             const userId = parseInt(req.params.id, 10);
             const updatedUser = req.body;
-            if (!updatedUser.nombre || !updatedUser.email || !updatedUser.contrasena || !updatedUser.rol_id) {
-                return res.status(400).json({ error: "Invalid user data" });
+            if (isNaN(userId)) {
+                return res.status(400).json({ error: "Invalid ID format" });
             }
             const result = await userModel.updateUser(userId, updatedUser);
-            if (result.affectedRows >0) {
-                return res.status(200).json(updatedUser);
-            }else{
-                return res.status(404).json({ error: `User not found` });
-            }
+            return res.status(200).json(result);
         }catch (error) {
-            console.error("Error updating user:", error.message);
-            res.status(500).json({ error: "Internal server error"});
+            const errorMessage = error.message;
+
+        if (errorMessage.includes("not found")) {
+            return res.status(404).json({ error: errorMessage });
+        }
+        if (errorMessage.includes("No data provided")) {
+            return res.status(400).json({ error: errorMessage });
+        }
+        console.error("Error updating user:", errorMessage);
+        return res.status(500).json({ error: "Internal server error: Failed to process update." });
         }
    }
    async deleteUser(req, res) {
@@ -51,13 +55,11 @@ class UserController {
             if(!userId) {
                 return res.status(400).json({ error: "Invalid user ID" });
             }
-            const result = await userModel.deleteUser(userId);
-            if (result.affectedRows >0) {
-                return res.status(200).end();
-            }else{
-                return res.status(404).json({ error: `User not found` });
+            await userModel.deleteUser(userId);         
+            return res.status(204).end();
+           
             }
-        }catch (error) {
+        catch (error) {
             console.error("Error deleting user:", error.message);
             res.status(500).json({ error: "Internal server error"});
         }
@@ -82,3 +84,4 @@ class UserController {
 
 }
 
+export default new UserController();
