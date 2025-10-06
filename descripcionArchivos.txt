@@ -1,9 +1,0 @@
-c = create/crear
-u = update/modificar
-d = delete/eliminar
-
-i = insert/insertar
-s = select/seleccionar
-
-cTP = create Tablas Principales
-cTR = create Tablas Relacionadas
