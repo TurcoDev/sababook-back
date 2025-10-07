@@ -70,7 +70,7 @@ export const eliminarForo = async (req, res) => {
             RETURNING foro_id
         `;
         if (result.length === 0) return res.status(404).json({ mensaje: 'Foro no encontrado' });
-        res.json({ mensaje: 'Foro eliminado correctamente' });
+        res.json({ mensaje: 'Foro eliminado correctamente ' });
     } catch (error) {
         console.error("❌ Error al eliminar foro:", error);
         res.status(500).json({ mensaje: 'Error al eliminar el foro' });
