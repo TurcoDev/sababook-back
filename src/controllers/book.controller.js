@@ -58,3 +58,14 @@ exports.eliminar = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al eliminar libro' });
   }
 };
+
+exports.eliminacionLogica = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await LibroModel.eliminacionLogica(id);
+    res.json({ mensaje: 'Libro marcado como inactivo' });
+  } catch (error) {
+    console.error('Error al marcar como inactivo:', error);
+    res.status(500).json({ mensaje: 'Error al marcar libro como inactivo' });
+  }
+};
