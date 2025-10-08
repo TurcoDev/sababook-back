@@ -4,14 +4,14 @@ import UserController from "../controllers/user.controller.js";
 const router = Router();
 
 // Obtener todos los usuarios
-router.get("/user", UserController.getAllUsers);
+router.get("/", UserController.getAllUsers);
 
-router.get("/user/:id", UserController.getUserById);
+router.get("/:id", UserController.getUserById);
 
-router.post("/user", UserController.createUser);
+router.post("/", UserController.createUser);
 
-router.put("/user/:id", UserController.updateUser);
+router.put("/:id", UserController.updateUser);
 
-router.delete("/user/:id", UserController.deleteUser);  
+router.delete("/:id", UserController.deleteUser);  
 
 export default router;
