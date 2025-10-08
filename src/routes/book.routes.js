@@ -8,6 +8,7 @@ router.get('/buscar', librosController.buscar);
 router.get('/:id', librosController.verDetalle);
 router.put('/:id', librosController.actualizar); 
 router.delete('/:id', librosController.eliminar);                 // Borrado físico
+router.patch('/inactivar/:id', librosController.eliminacionLogica); // Borrado lógico
 
 
 
