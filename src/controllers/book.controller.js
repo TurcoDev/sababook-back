@@ -1,4 +1,4 @@
-const LibroModel = require('../models/librosModel');
+const LibroModel = require('../models/book.model.js');
 
 // 1. Mostrar catálogo
 exports.obtenerCatalogo = async (req, res) => {
