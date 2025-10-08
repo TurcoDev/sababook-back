@@ -1,16 +1,27 @@
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
+import 'dotenv/config'; 
+import pgPromise from 'pg-promise';
 
-dotenv.config();
+const connectionString = process.env.DATABASE_URL;
 
-const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+if (!connectionString) {
+  console.error("DATABASE_URL environment variable is not set.");
+  process.exit(1);
+}
 
-export default db;
+
+const pgp =pgPromise();
+const db = pgp(connectionString);
+
+const testConnection = async () => {
+  try {
+    // Usamos una consulta simple para verificar la conexión
+    await db.one('SELECT current_timestamp'); 
+    console.log('✅ Database connection established (Remota)');
+    return db;
+  } catch (error) {
+    console.error('❌ Supabase database connection failed:', error.message);
+    throw error; 
+  }
+};
+
+export { db, pgp ,testConnection};

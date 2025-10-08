@@ -5,6 +5,8 @@ import foroRoutes from './src/routes/foro.js';
 import comentarioRoutes from './src/routes/comentario.js';
 import userRoutes from './src/routes/user.routes.js'; // viene de main
 import { initDB } from './src/db/connect/connectDB.js';
+import listaRoutes from "./src/routes/lista.routes.js";
+import listaLecturaRoutes from "./src/routes/listaLectura.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -15,14 +17,16 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(express.json());
 
 // Rutas
 app.use('/foro', foroRoutes);
 app.use('/comentario', comentarioRoutes);
-app.use('/api/v1', userRoutes);
+app.use('/api/v1/user', userRoutes);
+app.use("/api/v1/listas", listaRoutes);
+app.use("/api/v1/listas-lectura", listaLecturaRoutes);
 
-// Ruta de prueba
 app.get("/", (req, res) => {
   res.status(200).send("Hello World!\n");
 });
