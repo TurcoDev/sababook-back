@@ -59,3 +59,6 @@ exports.eliminarLibro = async (id) => {
   await pool.query('DELETE FROM libro WHERE libro_id = $1', [id]);
 };
 
+exports.eliminacionLogica = async (id) => {
+  await pool.query('UPDATE libro SET activo = false WHERE libro_id = $1', [id]);
+};
