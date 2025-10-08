@@ -6,6 +6,7 @@ const librosController = require('../controllers/book.controller.js');
 router.get('/', librosController.obtenerCatalogo);
 router.get('/buscar', librosController.buscar);
 router.get('/:id', librosController.verDetalle);
+router.put('/:id', librosController.actualizar); 
 
 
 module.exports = router;
