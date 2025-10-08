@@ -36,3 +36,14 @@ exports.buscar = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al buscar libros' });
   }
 };
+
+exports.actualizar = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await LibroModel.actualizarLibro(id, req.body);
+    res.json({ mensaje: 'Libro actualizado correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar:', error);
+    res.status(500).json({ mensaje: 'Error al actualizar libro' });
+  }
+};
