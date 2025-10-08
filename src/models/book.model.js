@@ -39,3 +39,19 @@ exports.buscarLibros = async ({ titulo, autor, genero, nivel_educativo }) => {
   return result.rows;
 };
 
+exports.actualizarLibro = async (id, datos) => {
+  const campos = [];
+  const valores = [];
+  let i = 1;
+
+  for (const [clave, valor] of Object.entries(datos)) {
+    campos.push(`${clave} = $${i}`);
+    valores.push(valor);
+    i++;
+  }
+
+  valores.push(id);
+  const query = `UPDATE libro SET ${campos.join(', ')} WHERE libro_id = $${i}`;
+  await pool.query(query, valores);
+};
+
