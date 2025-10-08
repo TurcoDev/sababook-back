@@ -5,7 +5,7 @@ import {
   obtenerComentario,
   actualizarComentario,
   eliminarComentario
-} from '../src/controllers/comentarioController.js';
+} from '../controllers/comentarioController.js';
 
 const router = Router();
 

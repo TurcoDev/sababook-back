@@ -1,8 +1,8 @@
 // server.js
 import express from 'express';
 import cors from 'cors';
-import foroRoutes from './routes/foro.js';
-import comentarioRoutes from './routes/comentario.js';
+import foroRoutes from './src/routes/foro.js';
+import comentarioRoutes from './src/routes/comentario.js';
 import userRoutes from './src/routes/user.routes.js'; // viene de main
 import { initDB } from './src/db/connect/connectDB.js';
 
