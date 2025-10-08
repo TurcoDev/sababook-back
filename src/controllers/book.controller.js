@@ -10,3 +10,18 @@ exports.obtenerCatalogo = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al obtener libros' });
   }
 };
+
+// 2. Ver detalle
+exports.verDetalle = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const libro = await LibroModel.obtenerPorId(id);
+    if (!libro) {
+      return res.status(404).json({ mensaje: 'Libro no encontrado' });
+    }
+    res.json(libro);
+  } catch (error) {
+    console.error('Error al obtener detalle:', error);
+    res.status(500).json({ mensaje: 'Error al obtener detalle del libro' });
+  }
+};
