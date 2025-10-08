@@ -25,3 +25,14 @@ exports.verDetalle = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al obtener detalle del libro' });
   }
 };
+
+// 3. Buscar
+exports.buscar = async (req, res) => {
+  try {
+    const libros = await LibroModel.buscarLibros(req.query);
+    res.json(libros);
+  } catch (error) {
+    console.error('Error al buscar libros:', error);
+    res.status(500).json({ mensaje: 'Error al buscar libros' });
+  }
+};
