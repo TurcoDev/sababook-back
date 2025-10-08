@@ -47,3 +47,14 @@ exports.actualizar = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al actualizar libro' });
   }
 };
+
+exports.eliminar = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await LibroModel.eliminarLibro(id);
+    res.json({ mensaje: 'Libro eliminado correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar:', error);
+    res.status(500).json({ mensaje: 'Error al eliminar libro' });
+  }
+};
