@@ -1,7 +1,7 @@
 {
   "name": "sababook-back",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend Sababook alineado al estándar del equipo, usando MySQL",
   "main": "server.js",
   "type": "module",
   "scripts": {
