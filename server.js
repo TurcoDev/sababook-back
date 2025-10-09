@@ -7,6 +7,7 @@ import userRoutes from './src/routes/user.routes.js'; // viene de main
 import { initDB } from './src/db/connect/connectDB.js';
 import listaRoutes from "./src/routes/lista.routes.js";
 import listaLecturaRoutes from "./src/routes/listaLectura.routes.js";
+import authRoutes from "./src/routes/auth.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -24,8 +25,9 @@ app.use(express.json());
 app.use('/foro', foroRoutes);
 app.use('/comentario', comentarioRoutes);
 app.use('/api/v1/user', userRoutes);
-app.use("/api/v1/listas", listaRoutes);
+app.use("/api/v1/listas", listaRoutes); 
 app.use("/api/v1/listas-lectura", listaLecturaRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).send("Hello World!\n");
