@@ -7,6 +7,7 @@ import userRoutes from './src/routes/user.routes.js'; // viene de main
 import { initDB } from './src/db/connect/connectDB.js';
 import listaRoutes from "./src/routes/lista.routes.js";
 import listaLecturaRoutes from "./src/routes/listaLectura.routes.js";
+import bookRoutes from "./src/routes/book.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -21,11 +22,12 @@ app.use(cors({
 app.use(express.json());
 
 // Rutas
-app.use('/foro', foroRoutes);
-app.use('/comentario', comentarioRoutes);
+app.use('/api/v1/foro', foroRoutes);
+app.use('/api/v1/comentario', comentarioRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use("/api/v1/listas", listaRoutes);
 app.use("/api/v1/listas-lectura", listaLecturaRoutes);
+app.use("/api/v1/libros", bookRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).send("Hello World!\n");

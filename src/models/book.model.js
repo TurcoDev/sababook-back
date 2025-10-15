@@ -1,16 +1,24 @@
-const pool = require('../db');
+import { db } from '../db.js';
 
-exports.obtenerTodos = async () => {
-  const result = await pool.query('SELECT * FROM libro');
-  return result.rows;
+// Obtener todos los libros
+export const obtenerTodos = async () => {
+  try {
+    const result = await db.any('SELECT * FROM libro');
+    return result;
+  } catch (error) {
+    console.error('Error al obtener todos los libros:', error);
+    throw error;
+  }
 };
 
-exports.obtenerPorId = async (id) => {
-  const result = await pool.query('SELECT * FROM libro WHERE libro_id = $1', [id]);
-  return result.rows[0];
+// Obtener libro por ID
+export const obtenerPorId = async (id) => {
+  const result = await db.oneOrNone('SELECT * FROM libro WHERE libro_id = $1', [id]);
+  return result;
 };
 
-exports.buscarLibros = async ({ titulo, autor, genero, nivel_educativo }) => {
+// Buscar libros con filtros
+export const buscarLibros = async ({ titulo, autor, genero, nivel_educativo }) => {
   const filtros = [];
   const valores = [];
 
@@ -35,11 +43,12 @@ exports.buscarLibros = async ({ titulo, autor, genero, nivel_educativo }) => {
     ? `SELECT * FROM libro WHERE ${filtros.join(' AND ')}`
     : 'SELECT * FROM libro';
 
-  const result = await pool.query(query, valores);
-  return result.rows;
+  const result = await db.any(query, valores);
+  return result;
 };
 
-exports.actualizarLibro = async (id, datos) => {
+// Actualizar libro
+export const actualizarLibro = async (id, datos) => {
   const campos = [];
   const valores = [];
   let i = 1;
@@ -51,14 +60,16 @@ exports.actualizarLibro = async (id, datos) => {
   }
 
   valores.push(id);
-  const query = `UPDATE libro SET ${campos.join(', ')} WHERE libro_id = $${i}`;
-  await pool.query(query, valores);
+  const query = `UPDATE libro SET ${campos.join(', ')} WHERE libro_id = $${i} RETURNING *`;
+  await db.oneOrNone(query, valores);
 };
 
-exports.eliminarLibro = async (id) => {
-  await pool.query('DELETE FROM libro WHERE libro_id = $1', [id]);
+// Eliminar libro físicamente
+export const eliminarLibro = async (id) => {
+  await db.result('DELETE FROM libro WHERE libro_id = $1', [id]);
 };
 
-exports.eliminacionLogica = async (id) => {
-  await pool.query('UPDATE libro SET activo = false WHERE libro_id = $1', [id]);
+// Eliminación lógica
+export const eliminacionLogica = async (id) => {
+  await db.result('UPDATE libro SET activo = false WHERE libro_id = $1', [id]);
 };
