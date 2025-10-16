@@ -1,7 +1,9 @@
 
 import { db,pgp } from "../db.js";
+import bcrypt from 'bcrypt';
 
 class UserModel {
+
      async getAllUsers() {
         
         const sqlQuery = `
@@ -31,6 +33,7 @@ class UserModel {
         }
     }
     async createUser(userData) {
+        const saltRounds = 10;
         const { 
             nombre, 
             email, 
@@ -43,7 +46,8 @@ class UserModel {
   
         const fecha_registro = new Date(); 
         
-        try {         
+        try {
+            const hashedPassword = await bcrypt.hash(contrasena, saltRounds);         
             const newUser = await db.one(`
                 INSERT INTO 
                     usuario (nombre, email, contrasena, rol_id, fecha_registro, perfil_completo, avatar_url, nivel_educativo) 
@@ -54,7 +58,7 @@ class UserModel {
             `, [
                 nombre, 
                 email, 
-                contrasena, 
+                hashedPassword, 
                 rol_id, 
                 fecha_registro,        
                 perfil_completo, 
@@ -65,7 +69,8 @@ class UserModel {
             return newUser; 
 
         } catch (error) {
-            console.error("Error en UserModel.createUser:", error);      
+            console.error("Error en UserModel.createUser:", error);
+            throw error;      
         }
     }
     async updateUser(userId, userData) {
