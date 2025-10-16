@@ -7,14 +7,19 @@ import userRoutes from './src/routes/user.routes.js'; // viene de main
 import { initDB } from './src/db/connect/connectDB.js';
 import listaRoutes from "./src/routes/lista.routes.js";
 import listaLecturaRoutes from "./src/routes/listaLectura.routes.js";
+<<<<<<< HEAD
 import medallaRoutes from './src/routes/medalla.routes.js';
+=======
+import authRoutes from "./src/routes/auth.routes.js";
+import bookRoutes from "./src/routes/book.routes.js";
+>>>>>>> 4e5697313067a008d75de3b72936546908698b07
 
 const app = express();
 const PORT = 3000;
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'null'],
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000', 'null'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -22,13 +27,14 @@ app.use(cors({
 app.use(express.json());
 
 // Rutas
-app.use('/foro', foroRoutes);
-app.use('/comentario', comentarioRoutes);
+app.use('/api/v1/foro', foroRoutes);
+app.use('/api/v1/comentario', comentarioRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use("/api/v1/listas", listaRoutes);
 app.use("/api/v1/listas-lectura", listaLecturaRoutes);
 app.use('/api/v1/medallas', medallaRoutes);
-
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/libros", bookRoutes);
 app.get("/", (req, res) => {
   res.status(200).send("Hello World!\n");
 });
