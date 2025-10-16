@@ -1,3 +1,4 @@
+import { medallaService } from '../services/medalla.service.js';
 // controllers/comentarioController.js
 import sql from '../db/connect/connectDB.js';
 
@@ -12,6 +13,9 @@ export const crearComentario = async (req, res) => {
       RETURNING comentario_id
     `;
 
+    // 🔁 Chequear y asignar medallas si corresponde
+    await medallaService.verificarYAsignarMedallas(usuario_id);
+
     res.status(201).json({ comentario_id: result[0].comentario_id });
   } catch (error) {
     console.error("❌ Error al crear comentario:", error);
@@ -21,6 +25,7 @@ export const crearComentario = async (req, res) => {
     });
   }
 };
+
 
 // Obtener todos los comentarios (opcional: filtrar por foro_id)
 export const obtenerComentarios = async (req, res) => {
