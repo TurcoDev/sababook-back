@@ -1,5 +1,5 @@
 
-import { db,pgp } from "../db.js";
+import { db,pgp } from "../db/connect/db.js";
 import bcrypt from 'bcrypt';
 
 class UserModel {

@@ -8,8 +8,7 @@ if (!connectionString) {
   process.exit(1);
 }
 
-
-const pgp =pgPromise();
+const pgp = pgPromise();
 const db = pgp(connectionString);
 
 const testConnection = async () => {

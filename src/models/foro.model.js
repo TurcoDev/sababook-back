@@ -1,5 +1,5 @@
 // models/foroModel.js
-import sql from '../db/connect/connectDB.js';
+import { db as sql } from '../db/connect/db.js';
 
 export const crearForoDB = async (titulo, descripcion, creador_id) => {
     const result = await sql`
