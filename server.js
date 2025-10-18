@@ -4,7 +4,7 @@ import cors from 'cors';
 import foroRoutes from './src/routes/foro.js';
 import comentarioRoutes from './src/routes/comentario.js';
 import userRoutes from './src/routes/user.routes.js'; // viene de main
-import { testConnection } from './src/db.js';
+import { testConnection } from './src/db/connect/db.js';
 import listaRoutes from "./src/routes/lista.routes.js";
 import listaLecturaRoutes from "./src/routes/listaLectura.routes.js";
 import authRoutes from "./src/routes/auth.routes.js";

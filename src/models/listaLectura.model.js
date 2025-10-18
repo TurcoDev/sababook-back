@@ -1,4 +1,4 @@
-import { db, pgp } from "../db.js";
+import { db, pgp } from "../db/connect/db.js";
 
 class ListaLecturaModel {
   // Crear una lista de lectura

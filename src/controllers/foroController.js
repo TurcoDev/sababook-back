@@ -1,5 +1,5 @@
 // controllers/foroController.js
-import { db as sql } from '../db.js';
+import { db as sql } from '../db/connect/db.js';
 
 // Crear un foro
 export const crearForo = async (req, res) => {
