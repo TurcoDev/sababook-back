@@ -1,5 +1,5 @@
 // controllers/comentarioController.js
-import sql from '../db/connect/connectDB.js';
+import { db as sql } from '../db.js';
 
 // Crear comentario
 export const crearComentario = async (req, res) => {
