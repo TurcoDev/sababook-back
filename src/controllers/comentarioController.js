@@ -1,83 +1,53 @@
-// controllers/comentarioController.js
-import { db as sql } from '../db.js';
+import {
+  insertarComentario,
+  obtenerComentariosPorForo,
+  obtenerTodosComentarios,
+  obtenerComentarioPorId,
+  actualizarComentarioPorId,
+  eliminarComentarioPorId
+} from '../models/comment.model.js';
 
-// Crear comentario
 export const crearComentario = async (req, res) => {
   try {
     const { foro_id, usuario_id, contenido } = req.body;
-
-    const result = await sql`
-      INSERT INTO comentario_foro (foro_id, usuario_id, contenido)
-      VALUES (${foro_id}, ${usuario_id}, ${contenido})
-      RETURNING comentario_id
-    `;
-
-    res.status(201).json({ comentario_id: result[0].comentario_id });
+    const nuevoComentario = await insertarComentario(foro_id, usuario_id, contenido);
+    res.status(201).json({ comentario_id: nuevoComentario.comentario_id });
   } catch (error) {
     console.error("❌ Error al crear comentario:", error);
-    res.status(500).json({
-      mensaje: 'Error al crear el comentario',
-      detalle: error.message,
-    });
+    res.status(500).json({ mensaje: 'Error al crear el comentario', detalle: error.message });
   }
 };
 
-// Obtener todos los comentarios (opcional: filtrar por foro_id)
 export const obtenerComentarios = async (req, res) => {
   try {
-    let result;
+    let comentarios;
     if (req.query.foro_id) {
-      const foroId = parseInt(req.query.foro_id);
-      result = await sql`
-        SELECT * FROM comentario_foro WHERE foro_id = ${foroId} ORDER BY fecha ASC
-      `;
+      comentarios = await obtenerComentariosPorForo(parseInt(req.query.foro_id));
     } else {
-      result = await sql`SELECT * FROM comentario_foro ORDER BY fecha ASC`;
+      comentarios = await obtenerTodosComentarios();
     }
-
-    res.json(result);
+    res.json(comentarios);
   } catch (error) {
     console.error("❌ Error al obtener comentarios:", error);
     res.status(500).json({ mensaje: 'Error al obtener los comentarios' });
   }
 };
 
-// Obtener un comentario por ID
 export const obtenerComentario = async (req, res) => {
   try {
-    const comentarioId = parseInt(req.params.id);
-    const result = await sql`
-      SELECT * FROM comentario_foro WHERE comentario_id = ${comentarioId}
-    `;
-
-    if (result.length === 0) {
-      return res.status(404).json({ mensaje: 'Comentario no encontrado' });
-    }
-
-    res.json(result[0]);
+    const comentario = await obtenerComentarioPorId(parseInt(req.params.id));
+    if (!comentario) return res.status(404).json({ mensaje: 'Comentario no encontrado' });
+    res.json(comentario);
   } catch (error) {
     console.error("❌ Error al obtener comentario:", error);
     res.status(500).json({ mensaje: 'Error al obtener el comentario' });
   }
 };
 
-// Actualizar comentario
 export const actualizarComentario = async (req, res) => {
   try {
-    const comentarioId = parseInt(req.params.id);
-    const { contenido } = req.body;
-
-    const result = await sql`
-      UPDATE comentario_foro
-      SET contenido = ${contenido}
-      WHERE comentario_id = ${comentarioId}
-      RETURNING comentario_id
-    `;
-
-    if (result.length === 0) {
-      return res.status(404).json({ mensaje: 'Comentario no encontrado' });
-    }
-
+    const comentarioActualizado = await actualizarComentarioPorId(parseInt(req.params.id), req.body.contenido);
+    if (!comentarioActualizado) return res.status(404).json({ mensaje: 'Comentario no encontrado' });
     res.json({ mensaje: 'Comentario actualizado correctamente' });
   } catch (error) {
     console.error("❌ Error al actualizar comentario:", error);
@@ -85,21 +55,10 @@ export const actualizarComentario = async (req, res) => {
   }
 };
 
-// Eliminar comentario
 export const eliminarComentario = async (req, res) => {
   try {
-    const comentarioId = parseInt(req.params.id);
-
-    const result = await sql`
-      DELETE FROM comentario_foro
-      WHERE comentario_id = ${comentarioId}
-      RETURNING comentario_id
-    `;
-
-    if (result.length === 0) {
-      return res.status(404).json({ mensaje: 'Comentario no encontrado' });
-    }
-
+    const comentarioEliminado = await eliminarComentarioPorId(parseInt(req.params.id));
+    if (!comentarioEliminado) return res.status(404).json({ mensaje: 'Comentario no encontrado' });
     res.json({ mensaje: 'Comentario eliminado correctamente' });
   } catch (error) {
     console.error("❌ Error al eliminar comentario:", error);
