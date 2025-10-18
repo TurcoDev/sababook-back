@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.userId = decoded.usuario_id;
-            req.userRole = decoded.rol;
+            req.userRole = decoded.rol_id;
       
         next();
     }catch (error) {
