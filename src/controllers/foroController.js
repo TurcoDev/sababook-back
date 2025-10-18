@@ -1,16 +1,18 @@
 // controllers/foroController.js
-import { db as sql } from '../db/connect/db.js';
+import {
+    crearForoDB,
+    obtenerTodosForosDB,
+    obtenerForoPorIdDB,
+    actualizarForoDB,
+    eliminarForoDB
+} from '../models/foro.model.js';
 
 // Crear un foro
 export const crearForo = async (req, res) => {
     try {
         const { titulo, descripcion, creador_id } = req.body;
-        const result = await sql`
-            INSERT INTO foro (titulo, descripcion, creador_id)
-            VALUES (${titulo}, ${descripcion}, ${creador_id})
-            RETURNING foro_id
-        `;
-        res.status(201).json({ foro_id: result[0].foro_id });
+        const nuevoForo = await crearForoDB(titulo, descripcion, creador_id);
+        res.status(201).json({ foro_id: nuevoForo.foro_id });
     } catch (error) {
         console.error("❌ Error al crear foro:", error);
         res.status(500).json({ mensaje: 'Error al crear el foro', detalle: error.message });
@@ -20,8 +22,8 @@ export const crearForo = async (req, res) => {
 // Obtener todos los foros
 export const obtenerForos = async (req, res) => {
     try {
-        const result = await sql`SELECT * FROM foro ORDER BY fecha_creacion DESC`;
-        res.json(result);
+        const foros = await obtenerTodosForosDB();
+        res.json(foros);
     } catch (error) {
         console.error("❌ Error al obtener foros:", error);
         res.status(500).json({ mensaje: 'Error al obtener los foros' });
@@ -31,10 +33,9 @@ export const obtenerForos = async (req, res) => {
 // Obtener un foro por ID
 export const obtenerForo = async (req, res) => {
     try {
-        const foroId = parseInt(req.params.id);
-        const result = await sql`SELECT * FROM foro WHERE foro_id = ${foroId}`;
-        if (result.length === 0) return res.status(404).json({ mensaje: 'Foro no encontrado' });
-        res.json(result[0]);
+        const foro = await obtenerForoPorIdDB(parseInt(req.params.id));
+        if (!foro) return res.status(404).json({ mensaje: 'Foro no encontrado' });
+        res.json(foro);
     } catch (error) {
         console.error("❌ Error al obtener foro:", error);
         res.status(500).json({ mensaje: 'Error al obtener el foro' });
@@ -44,15 +45,9 @@ export const obtenerForo = async (req, res) => {
 // Actualizar un foro
 export const actualizarForo = async (req, res) => {
     try {
-        const foroId = parseInt(req.params.id);
         const { titulo, descripcion } = req.body;
-        const result = await sql`
-            UPDATE foro
-            SET titulo = ${titulo}, descripcion = ${descripcion}
-            WHERE foro_id = ${foroId}
-            RETURNING foro_id
-        `;
-        if (result.length === 0) return res.status(404).json({ mensaje: 'Foro no encontrado' });
+        const foroActualizado = await actualizarForoDB(parseInt(req.params.id), titulo, descripcion);
+        if (!foroActualizado) return res.status(404).json({ mensaje: 'Foro no encontrado' });
         res.json({ mensaje: 'Foro actualizado correctamente' });
     } catch (error) {
         console.error("❌ Error al actualizar foro:", error);
@@ -63,14 +58,9 @@ export const actualizarForo = async (req, res) => {
 // Eliminar un foro
 export const eliminarForo = async (req, res) => {
     try {
-        const foroId = parseInt(req.params.id);
-        const result = await sql`
-            DELETE FROM foro
-            WHERE foro_id = ${foroId}
-            RETURNING foro_id
-        `;
-        if (result.length === 0) return res.status(404).json({ mensaje: 'Foro no encontrado' });
-        res.json({ mensaje: 'Foro eliminado correctamente ' });
+        const foroEliminado = await eliminarForoDB(parseInt(req.params.id));
+        if (!foroEliminado) return res.status(404).json({ mensaje: 'Foro no encontrado' });
+        res.json({ mensaje: 'Foro eliminado correctamente' });
     } catch (error) {
         console.error("❌ Error al eliminar foro:", error);
         res.status(500).json({ mensaje: 'Error al eliminar el foro' });
