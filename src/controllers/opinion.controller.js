@@ -45,7 +45,7 @@ class OpinionController {
         return res.status(400).json({ error: "Missing required fields" });
       }
 
-      // Moderación automática del comentario
+      // Moderación automática 
       const comentarioLimpio = leoProfanity.clean(comentario);
 
       const newOpinion = await opinionModel.createOpinion({
@@ -70,7 +70,7 @@ async updateOpinion(req, res) {
       return res.status(400).json({ error: "Invalid opinion ID" });
     }
 
-    // Buscar opinión
+    
     const existingOpinion = await opinionModel.getOpinionById(opinionId);
     if (!existingOpinion) {
       return res.status(404).json({ error: "Opinion not found" });
@@ -110,7 +110,7 @@ async deleteOpinion(req, res) {
       return res.status(404).json({ error: "Opinion not found" });
     }
 
-    // 🔐 Solo el autor o admin pueden borrar
+    // Solo el autor o admin pueden borrar
     const userId = req.userId;
     const userRole = req.userRole;
 

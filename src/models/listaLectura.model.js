@@ -1,7 +1,7 @@
 import { db, pgp } from "../db/connect/db.js";
 
 class ListaLecturaModel {
-  // Crear una lista de lectura
+  
   async crearListaLectura(lista_id, docente_id, descripcion, nivel) {
     try {
       const nueva = await db.one(`
@@ -18,7 +18,7 @@ class ListaLecturaModel {
     }
   }
 
-  // Obtener todas las listas de lectura
+  
   async obtenerTodas() {
     try {
       const listas = await db.any(`
@@ -40,7 +40,7 @@ class ListaLecturaModel {
     }
   }
 
-  // Obtener listas de lectura por docente
+  
   async obtenerPorDocente(docente_id) {
     try {
       const listas = await db.any(`
@@ -64,12 +64,12 @@ class ListaLecturaModel {
     }
   }
 
-  // Actualizar una lista de lectura
+ 
   async actualizarListaLectura(lista_id, docente_id, descripcion, nivel) {
     try {
       const campos = { descripcion, nivel };
 
-      // Eliminar campos undefined para evitar errores
+      
       Object.keys(campos).forEach(key => {
         if (campos[key] === undefined) delete campos[key];
       });
@@ -100,7 +100,7 @@ class ListaLecturaModel {
     }
   }
 
-  // Eliminar una lista de lectura
+  
   async eliminarListaLectura(lista_id, docente_id) {
     try {
       const result = await db.result(`
