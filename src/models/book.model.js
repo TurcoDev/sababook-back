@@ -1,4 +1,4 @@
-import { db } from '../db.js';
+import { db } from '../db/connect/db.js';
 
 // Obtener todos los libros
 export const obtenerTodos = async () => {

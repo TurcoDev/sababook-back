@@ -8,8 +8,10 @@ import jwt from 'jsonwebtoken';
         const token = authHeader.split(' ')[1]; // Extrae solo el token
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
             req.userId = decoded.usuario_id||decoded.id;
             req.userRole = decoded.rol_id||1;
+
       
         next();
     }catch (error) {

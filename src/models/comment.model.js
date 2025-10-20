@@ -1,5 +1,5 @@
 // models/comentarioModel.js
-import sql from '../db/connect/connectDB.js';
+import { db as sql }  from '../db/connect/db.js';
 
 export const insertarComentario = async (foro_id, usuario_id, contenido) => {
     const result = await sql`

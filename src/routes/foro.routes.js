@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { crearForo, obtenerForos, obtenerForo, actualizarForo, eliminarForo } from '../controllers/foroController.js';
+import { crearForo, obtenerForos, obtenerForo, actualizarForo, eliminarForo } from '../controllers/foro.controller.js';
 
 const router = Router();
 
