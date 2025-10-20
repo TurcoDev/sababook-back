@@ -1,7 +1,7 @@
 import { listaLecturaModel } from "../models/listaLectura.model.js";
 
 class ListaLecturaController {
-  // Crear lista de lectura
+  
   async crear(req, res) {
     try {
       const { lista_id, docente_id, descripcion, nivel } = req.body;
@@ -25,7 +25,7 @@ class ListaLecturaController {
     }
   }
 
-  // Obtener todas las listas de lectura
+ 
   async obtenerTodas(req, res) {
     try {
       const listas = await listaLecturaModel.obtenerTodas();
@@ -36,7 +36,7 @@ class ListaLecturaController {
     }
   }
 
-  // Obtener por docente
+  
   async obtenerPorDocente(req, res) {
     try {
       const { docente_id } = req.params;
@@ -53,7 +53,7 @@ class ListaLecturaController {
     }
   }
 
-  // Actualizar una lista de lectura
+  
   async actualizar(req, res) {
     try {
       const { lista_id, docente_id } = req.params;
@@ -84,7 +84,7 @@ class ListaLecturaController {
     }
   }
 
-  // Eliminar una lista de lectura
+  
   async eliminar(req, res) {
     try {
       const { lista_id, docente_id } = req.params;
