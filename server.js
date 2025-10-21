@@ -7,7 +7,7 @@ import userRoutes from './src/routes/user.routes.js'; // viene de main
 import { testConnection } from './src/db/connect/db.js';
 import listaRoutes from "./src/routes/lista.routes.js";
 import listaLecturaRoutes from "./src/routes/listaLectura.routes.js";
-import medallaRoutes from './src/routes/medalla.routes.js';
+// import medallaRoutes from './src/routes/medalla.routes.js';
 import authRoutes from "./src/routes/auth.routes.js";
 import bookRoutes from "./src/routes/book.routes.js";
 import opinionRoutes from "./src/routes/opinion.routes.js";
@@ -30,7 +30,7 @@ app.use('/api/v1/comentario', comentarioRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use("/api/v1/listas", listaRoutes);
 app.use("/api/v1/listas-lectura", listaLecturaRoutes);
-app.use('/api/v1/medallas', medallaRoutes);
+// app.use('/api/v1/medallas', medallaRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/libros", bookRoutes);
 app.use("/api/v1/opinion", opinionRoutes);
