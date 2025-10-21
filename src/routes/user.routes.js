@@ -6,15 +6,15 @@ const router = Router();
 const roldAdmin = 3;
 
 // Obtener todos los usuarios
-router.get("/",verifyToken,requireRole(roldAdmin), UserController.getAllUsers);
+router.get("/", verifyToken, requireRole(roldAdmin), UserController.getAllUsers);
 
-router.get("/:id",verifyToken, UserController.getUserById);
+router.get("/:id", verifyToken, UserController.getUserById);
 
 router.post("/", UserController.createUser);
 
-router.put("/:id",verifyToken, UserController.updateUser);
+router.put("/:id", verifyToken, UserController.updateUser);
 
-router.delete("/:id",verifyToken,requireRole(roldAdmin), UserController.deleteUser);  
+router.delete("/:id", verifyToken, requireRole(roldAdmin), UserController.deleteUser);
 
 export default router;
 
