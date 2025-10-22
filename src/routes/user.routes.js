@@ -6,7 +6,7 @@ const router = Router();
 const roldAdmin = 3;
 
 // Obtener todos los usuarios
-router.get("/", verifyToken, requireRole(roldAdmin), UserController.getAllUsers);
+router.get("/", /*verifyToken, requireRole(roldAdmin),*/ UserController.getAllUsers);
 
 router.get("/:id", verifyToken, UserController.getUserById);
 
