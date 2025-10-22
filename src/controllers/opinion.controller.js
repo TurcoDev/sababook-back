@@ -5,7 +5,7 @@ import leoProfanity from "leo-profanity";
 leoProfanity.loadDictionary("en");
 leoProfanity.loadDictionary("es");
 // Agregar palabras personalizadas
-leoProfanity.add(["mierda", "pelotudo", "boludo","Estupido"]);
+leoProfanity.add(["mierda", "pelotudo", "boludo", "Estupido"]);
 
 class OpinionController {
   async getAllOpinions(req, res) {
