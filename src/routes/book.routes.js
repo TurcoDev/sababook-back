@@ -4,6 +4,8 @@ import librosController from '../controllers/book.controller.js';
 const router = Router();
 
 // Rutas
+
+router.post('/', librosController.crear); 
 router.get('/', librosController.obtenerCatalogo);
 router.get('/buscar', librosController.buscar);
 router.get('/:id', librosController.verDetalle);
