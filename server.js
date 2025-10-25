@@ -16,9 +16,16 @@ const PORT = 3000;
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000', 'null'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: [
+    'http://localhost:3000', 
+    'http://localhost:5173', 
+    'http://127.0.0.1:3000', 
+    'https://statuesque-truffle-a9d0a3.netlify.app',
+    'https://sababook-back.onrender.com'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
