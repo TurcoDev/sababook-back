@@ -1,4 +1,4 @@
-// controllers/foroController.js
+import { obtenerForoConComentariosDB } from '../models/foro.model.js';
 import {
     crearForoDB,
     obtenerTodosForosDB,
@@ -64,5 +64,23 @@ export const eliminarForo = async (req, res) => {
     } catch (error) {
         console.error("❌ Error al eliminar foro:", error);
         res.status(500).json({ mensaje: 'Error al eliminar el foro' });
+    }
+};
+
+
+
+// Obtener foro con comentarios
+export const obtenerForoConComentarios = async (req, res) => {
+    try {
+        const foro_id = parseInt(req.params.id);
+        const foroConComentarios = await obtenerForoConComentariosDB(foro_id);
+
+        if (!foroConComentarios)
+            return res.status(404).json({ mensaje: 'Foro no encontrado' });
+
+        res.json(foroConComentarios);
+    } catch (error) {
+        console.error("❌ Error al obtener foro con comentarios:", error);
+        res.status(500).json({ mensaje: 'Error al obtener foro con comentarios' });
     }
 };
