@@ -19,31 +19,32 @@ export const obtenerTodosForosDB = async () => {
 
 // Obtener un foro por ID
 export const obtenerForoPorIdDB = async (foro_id) => {
-  const result = await db.any(`
-    SELECT * FROM foro WHERE foro_id = ${foro_id}
-  `);
-  return result[0];
+  const result = await db.oneOrNone(`SELECT * FROM foro WHERE foro_id = $1`, [foro_id]);
+  return result;
 };
 
 // Actualizar un foro
 export const actualizarForoDB = async (foro_id, titulo, descripcion) => {
-  const result = await db.any(`
+  const result = await db.one(
+    `
     UPDATE foro
-    SET titulo = ${titulo}, descripcion = ${descripcion}
-    WHERE foro_id = ${foro_id}
+    SET titulo = $1, descripcion = $2
+    WHERE foro_id = $3
     RETURNING foro_id
-  `);
-  return result[0];
+    `,
+    [titulo, descripcion, foro_id]
+  );
+  return result;
 };
+
 
 // Eliminar un foro
 export const eliminarForoDB = async (foro_id) => {
-  const result = await db.any(`
-    DELETE FROM foro
-    WHERE foro_id = ${foro_id}
-    RETURNING foro_id
-  `);
-  return result[0];
+  const result = await db.oneOrNone(
+    `DELETE FROM foro WHERE foro_id = $1 RETURNING foro_id`,
+    [foro_id]
+  );
+  return result;
 };
 
 // Obtener foro con comentarios y datos de usuario
