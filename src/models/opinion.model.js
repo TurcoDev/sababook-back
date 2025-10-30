@@ -101,6 +101,29 @@ class OpinionModel {
       throw error;
     }
   }
+  async getOpinionsByLibro(libroId) {
+  const sql = `
+    SELECT 
+      o.opinion_id,
+      o.usuario_id,
+      u.nombre AS usuario_nombre,
+      o.libro_id,
+      o.calificacion,
+      o.comentario,
+      o.fecha
+    FROM opinion o
+    INNER JOIN usuario u ON o.usuario_id = u.usuario_id
+    WHERE o.libro_id = $1
+    ORDER BY o.fecha DESC;
+  `;
+  try {
+    return await db.any(sql, [libroId]);
+  } catch (error) {
+    console.error("Error OpinionModel.getOpinionsByLibro:", error.message);
+    throw new Error("Failed to retrieve opinions for libro.");
+  }
+}
+
 }
 
 export const opinionModel = new OpinionModel();
