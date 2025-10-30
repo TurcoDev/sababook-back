@@ -2,13 +2,15 @@ import { db } from '../db/connect/db.js';
 
 // Crear un foro
 export const crearForoDB = async (titulo, descripcion, creador_id) => {
-  const result = await db.any(`
-    INSERT INTO foro (titulo, descripcion, creador_id)
-    VALUES (${titulo}, ${descripcion}, ${creador_id})
-    RETURNING foro_id
-  `);
-  return result[0];
+  const result = await db.one(
+    `INSERT INTO foro (titulo, descripcion, creador_id)
+     VALUES ($1, $2, $3)
+     RETURNING foro_id`,
+    [titulo, descripcion, creador_id]
+  );
+  return result;
 };
+
 
 // Obtener todos los foros
 export const obtenerTodosForosDB = async () => {

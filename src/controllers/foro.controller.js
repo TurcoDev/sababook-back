@@ -10,6 +10,7 @@ import {
 // Crear un foro
 export const crearForo = async (req, res) => {
     try {
+        console.log("🟡 Datos recibidos desde frontend:", req.body);
         const { titulo, descripcion, creador_id } = req.body;
         const nuevoForo = await crearForoDB(titulo, descripcion, creador_id);
         res.status(201).json({ foro_id: nuevoForo.foro_id });
