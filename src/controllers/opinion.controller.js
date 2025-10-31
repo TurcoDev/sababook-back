@@ -1,10 +1,10 @@
 import { opinionModel } from "../models/opinion.model.js";
 import leoProfanity from "leo-profanity";
 
-// Inicializamos los diccionarios de palabras prohibidas en varios idiomas
+// Inicializamos los diccionarios de malas palabras
 leoProfanity.loadDictionary("en");
 leoProfanity.loadDictionary("es");
-// Agregar palabras personalizadas
+
 leoProfanity.add(["mierda", "pelotudo", "boludo", "Estupido"]);
 
 class OpinionController {
@@ -125,6 +125,21 @@ async deleteOpinion(req, res) {
     return res.status(500).json({ error: "Internal server error" });
   }
 }
+async getOpinionsByLibro(req, res) {
+  try {
+    const libroId = parseInt(req.params.libro_id, 10);
+    if (isNaN(libroId)) {
+      return res.status(400).json({ error: "Invalid libro ID" });
+    }
+
+    const sqlOpinions = await opinionModel.getOpinionsByLibro(libroId);
+    return res.status(200).json(sqlOpinions);
+  } catch (error) {
+    console.error("Error getting opinions by libro:", error.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 }
 
 export default new OpinionController();
