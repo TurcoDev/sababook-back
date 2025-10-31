@@ -34,13 +34,11 @@ app.use(express.json());
 app.use('/api/v1/foro', foroRoutes);
 app.use('/api/v1/comentario', comentarioRoutes);
 app.use('/api/v1/user', userRoutes);
-app.use("/api/v1/listas", listaRoutes); 
+app.use("/api/v1/listas", listaRoutes);
 app.use("/api/v1/listas-lectura", listaLecturaRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/libros", bookRoutes);
 app.use("/api/v1/opinion", opinionRoutes);
-
-
 
 
 app.get("/", (req, res) => {
