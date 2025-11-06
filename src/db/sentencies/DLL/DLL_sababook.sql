@@ -151,3 +151,21 @@ CREATE TABLE exportacion (
     formato_archivo VARCHAR(50),
     estado VARCHAR(50) -- completado, error, pendiente, etc.
 );
+CREATE TABLE favorito (
+    usuario_id INTEGER NOT NULL,
+    libro_id INTEGER NOT NULL,
+
+    -- Define las claves foráneas (Foreign Keys)
+    CONSTRAINT fk_usuario
+        FOREIGN KEY (usuario_id)
+        REFERENCES usuario (usuario_id)
+        ON DELETE CASCADE, -- Opcional: Si el usuario se elimina, se eliminan sus favoritos.
+
+    CONSTRAINT fk_libro
+        FOREIGN KEY (libro_id)
+        REFERENCES libro (libro_id)
+        ON DELETE CASCADE, -- Opcional: Si el libro se elimina, se eliminan las entradas de favorito.
+
+    -- Definir una clave primaria compuesta para evitar favoritos duplicados
+    PRIMARY KEY (usuario_id, libro_id)
+);
