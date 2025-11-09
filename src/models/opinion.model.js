@@ -50,21 +50,29 @@ class OpinionModel {
   }
 
   async createOpinion(opinionData) {
-    const { usuario_id, libro_id, calificacion, comentario } = opinionData;
-    const fecha = new Date();
+  const { usuario_id, libro_id, calificacion, comentario } = opinionData;
+  const fecha = new Date();
 
-    try {
-      const sql = `
+  try {
+    // Insertamos la opinión y devolvemos el registro con el nombre del usuario
+    const sql = `
+      WITH nueva AS (
         INSERT INTO opinion (usuario_id, libro_id, calificacion, comentario, fecha)
         VALUES ($1, $2, $3, $4, $5)
-        RETURNING opinion_id, usuario_id, libro_id, calificacion, comentario, fecha;
-      `;
-      return await db.one(sql, [usuario_id, libro_id, calificacion, comentario, fecha]);
-    } catch (error) {
-      console.error("Error OpinionModel.createOpinion:", error.message);
-      throw error;
-    }
+        RETURNING opinion_id, usuario_id, libro_id, calificacion, comentario, fecha
+      )
+      SELECT n.*, u.nombre AS usuario_nombre
+      FROM nueva n
+      JOIN usuario u ON n.usuario_id = u.usuario_id;
+    `;
+    return await db.one(sql, [usuario_id, libro_id, calificacion, comentario, fecha]);
+  } catch (error) {
+    console.error("Error OpinionModel.createOpinion:", error.message);
+    throw error;
   }
+}
+
+
 
   async updateOpinion(opinionId, updatedFields) {
     if (Object.keys(updatedFields).length === 0) {
