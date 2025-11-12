@@ -10,6 +10,7 @@ import listaLecturaRoutes from "./src/routes/listaLectura.routes.js";
 import authRoutes from "./src/routes/auth.routes.js";
 import bookRoutes from "./src/routes/book.routes.js";
 import opinionRoutes from "./src/routes/opinion.routes.js";
+import favoritosRoutes from "./routes/favoritos.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -39,6 +40,7 @@ app.use("/api/v1/listas-lectura", listaLecturaRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/libros", bookRoutes);
 app.use("/api/v1/opinion", opinionRoutes);
+app.use("/api/v1/favoritos", favoritosRoutes);
 
 
 app.get("/", (req, res) => {
