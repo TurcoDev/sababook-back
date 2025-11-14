@@ -11,6 +11,7 @@ import authRoutes from "./src/routes/auth.routes.js";
 import bookRoutes from "./src/routes/book.routes.js";
 import opinionRoutes from "./src/routes/opinion.routes.js";
 import favoriteRoutes from "./src/routes/favorite.routes.js";
+import medalRoutes from "./src/routes/medal.routes.js";
 
 
 const app = express();
@@ -42,6 +43,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/libros", bookRoutes);
 app.use("/api/v1/opinion", opinionRoutes);
 app.use("/api/v1/favorites", favoriteRoutes);
+app.use("/api/v1/medal", medalRoutes);
 
 
 app.get("/", (req, res) => {

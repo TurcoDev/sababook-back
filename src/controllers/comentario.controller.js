@@ -6,11 +6,14 @@ import {
   actualizarComentarioPorId,
   eliminarComentarioPorId
 } from '../models/comment.model.js';
+import * as medalModel from '../models/medal.model.js';
 
 export const crearComentario = async (req, res) => {
   try {
     const { foro_id, usuario_id, contenido } = req.body;
     const nuevoComentario = await insertarComentario(foro_id, usuario_id, contenido);
+    // Verificar y asignar medallas después de crear el comentario del usuario
+    await medalModel.verificarYAsignarMedallas(usuario_id);
     res.status(201).json({ comentario_id: nuevoComentario.comentario_id });
   } catch (error) {
     console.error("❌ Error al crear comentario:", error);

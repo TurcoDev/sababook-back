@@ -55,6 +55,9 @@ class OpinionController {
         comentario: comentarioLimpio,
       });
 
+      // Verificar y asignar medallas después de crear el comentario del usuario
+      await medalModel.verificarYAsignarMedallas(usuario_id);
+
       return res.status(201).json(newOpinion);
     } catch (error) {
       console.error("Error creating opinion:", error.message);

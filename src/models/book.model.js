@@ -58,6 +58,8 @@ export const buscarLibros = async ({ titulo, autor, genero, nivel_educativo }) =
     valores.push(nivel_educativo);
   }
 
+  // FIXME: esto esta mal, debe devolver una union entre titulo y autor, es decir un or
+  // y un and con genero y nivel educativo
   const query = filtros.length > 0
     ? `SELECT * FROM libro WHERE ${filtros.join(' AND ')}`
     : 'SELECT * FROM libro';
