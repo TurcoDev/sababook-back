@@ -1,4 +1,4 @@
-import * as medalModel from '../models/medal.model.js';
+import { medalModel } from '../models/medal.model.js';
 
 // Controlador para obtener las medallas de un usuario
 export const obtenerMedallasUsuario = async (req, res) => {

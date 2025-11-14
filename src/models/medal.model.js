@@ -1,4 +1,4 @@
- import { db } from '../db/connect/db.js';
+import { db } from '../db/connect/db.js';
 
 class MedalModel {
     async verificarYAsignarMedallas(usuario_id) {
@@ -78,4 +78,4 @@ class MedalModel {
     }
 }
 
-export const medallaService = new MedalModel();
+export const medalModel = new MedalModel();
