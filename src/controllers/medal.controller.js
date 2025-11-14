@@ -8,7 +8,7 @@ export const obtenerMedallasUsuario = async (req, res) => {
       return res.status(400).json({ mensaje: 'ID de usuario inválido' });
     }
     // Obtener las medallas del usuario
-    const medallas = await medalModel.medallaService.obtenerMedallasPorUsuario(usuario_id);
+    const medallas = await medalModel.obtenerMedallasPorUsuario(usuario_id);
     res.json(medallas);
   } catch (error) {
     console.error('❌ Error al obtener medallas del usuario:', error);
