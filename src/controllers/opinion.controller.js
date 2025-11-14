@@ -1,4 +1,5 @@
 import { opinionModel } from "../models/opinion.model.js";
+import { medalModel } from '../models/medal.model.js';
 import leoProfanity from "leo-profanity";
 
 // Inicializamos los diccionarios de malas palabras
