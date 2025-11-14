@@ -56,6 +56,9 @@ class OpinionController {
         comentario: comentarioLimpio,
       });
 
+      console.log(newOpinion);
+      
+
       // Verificar y asignar medallas después de crear el comentario del usuario
       await medalModel.verificarYAsignarMedallas(usuario_id);
 
