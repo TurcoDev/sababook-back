@@ -6,7 +6,7 @@ import {
   actualizarComentarioPorId,
   eliminarComentarioPorId
 } from '../models/comment.model.js';
-import * as medalModel from '../models/medal.model.js';
+import { medalModel } from '../models/medal.model.js';
 
 export const crearComentario = async (req, res) => {
   try {
