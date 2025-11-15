@@ -59,8 +59,8 @@ class FavoriteController {
   // ❌ DELETE: Eliminar un favorito
   async delete(req, res) {
     try {
-      const usuario_id = req.userId;
-      const libro_id = parseInt(req.params.libro_id, 10);
+      const usuario_id = req.userId; // viene del token (middleware verifyToken)
+      const { libro_id } = req.body;
 
       if (!usuario_id || isNaN(libro_id)) {
         return res.status(400).json({ error: "Invalid or missing IDs" });

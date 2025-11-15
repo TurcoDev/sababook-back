@@ -17,7 +17,7 @@ export const favoriteModel = {
 
   async getFavoritesByUser(usuario_id) {
     const query = `
-      SELECT f.libro_id, l.titulo, l.autor, l.genero
+      SELECT f.libro_id, l.titulo, l.autor, l.genero, l.descripcion, l.portada_url, l.calificacion_promedio
       FROM favorito f
       JOIN libro l ON f.libro_id = l.libro_id
       WHERE f.usuario_id = $1;

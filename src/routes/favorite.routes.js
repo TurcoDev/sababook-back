@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/", verifyToken, favoriteController.create);
 router.get("/", verifyToken, favoriteController.getByUser);
-router.delete("/:libro_id", verifyToken, favoriteController.delete);
+router.delete("/", verifyToken, favoriteController.delete);
 
 router.get("/all", verifyToken, favoriteController.getAll);
 
