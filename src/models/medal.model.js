@@ -19,8 +19,10 @@ class MedalModel {
       
 
       if (parseInt(cantidadOpiniones, 10) >= 1) {
-        // await this.asignarMedallaSiNoTiene(usuario_id, 'Opinador', 'Ha opinado en más de 1 libro.', 'opinar');
-        await this.asignarMedallaSiNoTiene(usuario_id, 2); // medalla_id para 'Opinador' de libros
+        await this.asignarMedallaSiNoTiene(usuario_id, 6); // medalla_id para 'Opinador' de libros
+      }
+      if (parseInt(cantidadOpiniones, 10) >= 10) {
+        await this.asignarMedallaSiNoTiene(usuario_id, 1); // medalla_id para 'Debatiente' de libros
       }
 
       // Verificar cantidad de participaciones en foros
@@ -29,8 +31,10 @@ class MedalModel {
       `, [usuario_id]);
 
       if (parseInt(cantidadForos, 10) >= 1) {
-        // await this.asignarMedallaSiNoTiene(usuario_id, 'Debatiente', 'Ha participado en más de 1 foro.', 'participar');
-        await this.asignarMedallaSiNoTiene(usuario_id, 1); // medalla_id para 'Debatiente' de foros
+        await this.asignarMedallaSiNoTiene(usuario_id, 5); // medalla_id para 'Comentador' de foros
+      }
+      if (parseInt(cantidadForos, 10) >= 10) {
+        await this.asignarMedallaSiNoTiene(usuario_id, 2); // medalla_id para 'Comentador Activo' de foros
       }
 
     } catch (error) {
@@ -39,24 +43,6 @@ class MedalModel {
   }
 
   async asignarMedallaSiNoTiene(usuario_id, medalla_id) {
-    // // Verifica si la medalla ya existe, si no, la crea
-    // const medalla = await db.oneOrNone(`
-    //   SELECT * FROM usuario_medalla WHERE nombre = $1
-    // `, [nombre]);
-
-    // let medalla_id;
-
-    // if (!medalla) {
-    //   const nuevaMedalla = await db.one(`
-    //     INSERT INTO usuario_medalla (usuario_id, medalla_id, tipo_accion)
-    //     VALUES ($1, $2, $3)
-    //     RETURNING medalla_id
-    //   `, [nombre, descripcion, tipo_accion]);
-
-    //   medalla_id = nuevaMedalla.medalla_id;
-    // } else {
-    //   medalla_id = medalla.medalla_id;
-    // }
 
     // Verifica si el usuario ya tiene la medalla
     const yaTiene = await db.oneOrNone(`

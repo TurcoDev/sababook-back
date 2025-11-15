@@ -24,8 +24,8 @@ export const crearComentario = async (req, res) => {
 export const obtenerComentarios = async (req, res) => {
   try {
     let comentarios;
-    if (req.query.foro_id) {
-      comentarios = await obtenerComentariosPorForo(parseInt(req.query.foro_id));
+    if (req.params.foro_id) {
+      comentarios = await obtenerComentariosPorForo(parseInt(req.params.foro_id));
     } else {
       comentarios = await obtenerTodosComentarios();
     }

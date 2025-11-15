@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.post('/', crearComentario);
-router.get('/', obtenerComentarios);
+router.get('/:foro_id', obtenerComentarios);
 router.get('/:id', obtenerComentario);
 router.put('/:id', actualizarComentario);
 router.delete('/:id', eliminarComentario);
