@@ -37,17 +37,13 @@ export const obtenerPorId = async (id) => {
 };
 
 // Buscar libros con filtros
-export const buscarLibros = async ({ titulo, autor, genero, nivel_educativo }) => {
+export const buscarLibros = async ({ query, genero, nivel_educativo }) => {
   const filtros = [];
   const valores = [];
 
-  if (titulo) {
-    filtros.push(`titulo ILIKE $${filtros.length + 1}`);
-    valores.push(`%${titulo}%`);
-  }
-  if (autor) {
-    filtros.push(`autor ILIKE $${filtros.length + 1}`);
-    valores.push(`%${autor}%`);
+  if (query) {
+    filtros.push(`(titulo ILIKE $${filtros.length + 1} OR autor ILIKE $${filtros.length + 1})`);
+    valores.push(`%${query}%`);
   }
   if (genero) {
     filtros.push(`genero = $${filtros.length + 1}`);
@@ -58,13 +54,11 @@ export const buscarLibros = async ({ titulo, autor, genero, nivel_educativo }) =
     valores.push(nivel_educativo);
   }
 
-  // FIXME: esto esta mal, debe devolver una union entre titulo y autor, es decir un or
-  // y un and con genero y nivel educativo
-  const query = filtros.length > 0
+  const sql = filtros.length > 0
     ? `SELECT * FROM libro WHERE ${filtros.join(' AND ')}`
     : 'SELECT * FROM libro';
 
-  const result = await db.any(query, valores);
+  const result = await db.any(sql, valores);
   return result;
 };
 
