@@ -5,17 +5,22 @@ import {
   obtenerForo, 
   actualizarForo, 
   eliminarForo,
-  obtenerForoConComentarios 
+  obtenerForoConComentarios
 } from '../controllers/foro.controller.js';
+import { crearComentario } from '../controllers/comentario.controller.js';
 
 const router = Router();
 
+// Foros
 router.post('/', crearForo);
 router.get('/', obtenerForos);
 router.get('/:id', obtenerForo);
 router.put('/:id', actualizarForo);
 router.delete('/:id', eliminarForo);
+
+// Comentarios
 router.get('/:id/comentarios', obtenerForoConComentarios);
+router.post('/:id/comentarios', crearComentario); // <-- esta línea es la que faltaba
 
 export default router;
 

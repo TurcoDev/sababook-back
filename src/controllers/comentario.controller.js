@@ -7,19 +7,34 @@ import {
   eliminarComentarioPorId
 } from '../models/comment.model.js';
 import { medalModel } from '../models/medal.model.js';
+import { obtenerForoConComentariosDB } from '../models/foro.model.js';
 
 export const crearComentario = async (req, res) => {
   try {
-    const { foro_id, usuario_id, contenido } = req.body;
-    const nuevoComentario = await insertarComentario(foro_id, usuario_id, contenido);
-    // Verificar y asignar medallas después de crear el comentario del usuario
+    const { id } = req.params; // Foro ID desde la URL
+    const { usuario_id, contenido } = req.body;
+
+    const nuevoComentario = await insertarComentario(id, usuario_id, contenido);
+
+    // Asignar medallas si aplica
     await medalModel.verificarYAsignarMedallas(usuario_id);
-    res.status(201).json({ comentario_id: nuevoComentario.comentario_id });
+
+    // Obtener el comentario completo desde la DB
+    const foroConComentarios = await obtenerForoConComentariosDB(id);
+    const comentarioCompleto = foroConComentarios.comentarios.find(
+      c => c.comentario_id === nuevoComentario.comentario_id
+    );
+
+    res.status(201).json(comentarioCompleto);
   } catch (error) {
     console.error("❌ Error al crear comentario:", error);
-    res.status(500).json({ mensaje: 'Error al crear el comentario', detalle: error.message });
+    res.status(500).json({
+      mensaje: 'Error al crear el comentario',
+      detalle: error.message
+    });
   }
 };
+
 
 export const obtenerComentarios = async (req, res) => {
   try {
