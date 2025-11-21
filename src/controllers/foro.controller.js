@@ -34,12 +34,21 @@ export const obtenerForos = async (req, res) => {
 // Obtener un foro por ID
 export const obtenerForo = async (req, res) => {
     try {
-        const foro = await obtenerForoPorIdDB(parseInt(req.params.id));
-        if (!foro) return res.status(404).json({ mensaje: 'Foro no encontrado' });
+        const { id } = req.params;
+        const foro = await obtenerForoPorIdDB(id);
+
+        if (!foro) {
+            return res.status(404).json({ mensaje: "Foro no encontrado" });
+        }
+
         res.json(foro);
+
     } catch (error) {
-        console.error("❌ Error al obtener foro:", error);
-        res.status(500).json({ mensaje: 'Error al obtener el foro' });
+        console.error("❌ ERROR REAL:", error);
+        res.status(500).json({
+            mensaje: "Error al obtener el foro",
+            detalle: error.message
+        });
     }
 };
 
@@ -48,8 +57,12 @@ export const actualizarForo = async (req, res) => {
     try {
         const { titulo, descripcion } = req.body;
         const foroActualizado = await actualizarForoDB(parseInt(req.params.id), titulo, descripcion);
-        if (!foroActualizado) return res.status(404).json({ mensaje: 'Foro no encontrado' });
+
+        if (!foroActualizado)
+            return res.status(404).json({ mensaje: 'Foro no encontrado' });
+
         res.json({ mensaje: 'Foro actualizado correctamente' });
+
     } catch (error) {
         console.error("❌ Error al actualizar foro:", error);
         res.status(500).json({ mensaje: 'Error al actualizar el foro' });
@@ -60,15 +73,17 @@ export const actualizarForo = async (req, res) => {
 export const eliminarForo = async (req, res) => {
     try {
         const foroEliminado = await eliminarForoDB(parseInt(req.params.id));
-        if (!foroEliminado) return res.status(404).json({ mensaje: 'Foro no encontrado' });
+
+        if (!foroEliminado)
+            return res.status(404).json({ mensaje: 'Foro no encontrado' });
+
         res.json({ mensaje: 'Foro eliminado correctamente' });
+
     } catch (error) {
         console.error("❌ Error al eliminar foro:", error);
         res.status(500).json({ mensaje: 'Error al eliminar el foro' });
     }
 };
-
-
 
 // Obtener foro con comentarios
 export const obtenerForoConComentarios = async (req, res) => {
@@ -80,8 +95,10 @@ export const obtenerForoConComentarios = async (req, res) => {
             return res.status(404).json({ mensaje: 'Foro no encontrado' });
 
         res.json(foroConComentarios);
+
     } catch (error) {
         console.error("❌ Error al obtener foro con comentarios:", error);
         res.status(500).json({ mensaje: 'Error al obtener foro con comentarios' });
     }
 };
+

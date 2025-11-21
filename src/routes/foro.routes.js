@@ -1,6 +1,13 @@
 import { Router } from 'express';
-import { crearForo, obtenerForos, obtenerForo, actualizarForo, eliminarForo } from '../controllers/foro.controller.js';
-import { obtenerForoConComentarios } from '../controllers/foro.controller.js';
+import { 
+  crearForo, 
+  obtenerForos, 
+  obtenerForo, 
+  actualizarForo, 
+  eliminarForo,
+  obtenerForoConComentarios 
+} from '../controllers/foro.controller.js';
+
 const router = Router();
 
 router.post('/', crearForo);
@@ -11,3 +18,4 @@ router.delete('/:id', eliminarForo);
 router.get('/:id/comentarios', obtenerForoConComentarios);
 
 export default router;
+
