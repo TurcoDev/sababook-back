@@ -14,12 +14,31 @@ export const crearForoDB = async (titulo, descripcion, creador_id) => {
 
 // Obtener todos los foros
 export const obtenerTodosForosDB = async () => {
-  return await db.any(`SELECT * FROM foro ORDER BY fecha_creacion DESC`);
+  return db.any(`
+     SELECT 
+  f.foro_id,
+  f.titulo,
+  f.descripcion,
+  f.creador_id,
+  f.fecha_creacion,
+  u.nombre AS "creador_nombre"
+FROM foro f
+LEFT JOIN usuario u ON f.creador_id = u.usuario_id
+ORDER BY f.fecha_creacion DESC
+  `);
 };
 
 // Obtener un foro por ID
 export const obtenerForoPorIdDB = async (foro_id) => {
-  const result = await db.oneOrNone(`SELECT * FROM foro WHERE foro_id = $1`, [foro_id]);
+  const result = await db.oneOrNone(`
+    SELECT
+      f.*,
+      u.nombre AS "creador_nombre"
+    FROM foro f
+    LEFT JOIN usuario u ON f.creador_id = u.usuario_id
+    WHERE f.foro_id = $1
+  `, [foro_id]);
+  
   return result;
 };
 
@@ -51,9 +70,9 @@ export const eliminarForoDB = async (foro_id) => {
 export const obtenerForoConComentariosDB = async (foro_id) => {
   const foro = await db.oneOrNone(
     `SELECT f.foro_id, f.titulo, f.descripcion, f.fecha_creacion, 
-            u.nombre AS creador_nombre, u.avatar_url AS creador_avatar
+            u.nombre AS "creador_nombre", u.avatar_url AS creador_avatar
      FROM foro f
-     JOIN usuario u ON f.creador_id = u.usuario_id
+     LEFT JOIN usuario u ON f.creador_id = u.usuario_id
      WHERE f.foro_id = $1`,
     [foro_id]
   );

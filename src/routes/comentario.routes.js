@@ -15,4 +15,6 @@ router.get('/:id', obtenerComentario);
 router.put('/:id', actualizarComentario);
 router.delete('/:id', eliminarComentario);
 
+router.post('/:id/comentarios', crearComentario);
+
 export default router;
